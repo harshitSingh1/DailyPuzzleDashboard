@@ -1,22 +1,36 @@
-// server\server.js
+// app.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const authController = require('./controllers/authController');
 
-
-// Initialize Express
 const app = express();
 
-// Middleware
-app.use(cors());
+// CORS Configuration
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://your-frontend-domain.vercel.app"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Database Connection
 connectDB();
 
-// Initialize Admin (Run once)
+// Initialize Admin
 authController.initAdmin();
 
 // Routes
@@ -24,15 +38,15 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/puzzles', require('./routes/puzzleRoutes'));
 app.use('/api/tools', require('./routes/toolRoutes'));
 app.use('/api/shop', require('./routes/shopRoutes'));
-app.use((req, res, next) => {
-  console.log(`Incoming ${req.method} request to ${req.path}`);
-  console.log('Headers:', req.headers);
-  next();
+
+// Health Check
+app.get('/', (req, res) => res.send('PuzzleMaster API Running'));
+app.get('/ping', (req, res) => res.send('pong'));
+
+// Error Handling
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
 });
 
-// Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
-
+module.exports = app;
