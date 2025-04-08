@@ -10,7 +10,7 @@ const app = express();
 // CORS Configuration
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://your-frontend-domain.vercel.app"
+  "https://daily-puzzle-dashboard.vercel.app/"
 ];
 
 app.use(cors({
