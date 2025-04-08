@@ -1,7 +1,7 @@
 // client\src\api.js
 import axios from 'axios';
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://daily-puzzle-dashboard.vercel.app/api',
 });
 
 // Add auth token to requests
@@ -38,7 +38,7 @@ export const login = async (credentials) => {
     // Clear any existing token first
     localStorage.removeItem('token');
     
-    const response = await axios.post('http://localhost:5000/api/auth/login', credentials);
+    const response = await axios.post('https://daily-puzzle-dashboard.vercel.app/api/auth/login', credentials);
     
     if (response.data?.token) {
       localStorage.setItem('token', response.data.token);
