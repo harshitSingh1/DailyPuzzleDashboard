@@ -1,3 +1,4 @@
+// client\src\App.js
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -6,6 +7,7 @@ import Tools from './pages/Tools';
 import Shop from './pages/Shop';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import BulkUpload from "./pages/BulkUpload";
 import './styles.css';
 
 function App() {
@@ -15,7 +17,6 @@ function App() {
   useEffect(() => {
     // Verify token on app load and set up auth state
     const token = localStorage.getItem('token');
-    console.log('App loaded with token:', token);
     
     // Set initial auth state
     setIsAuthenticated(!!token);
@@ -105,6 +106,7 @@ function App() {
               <Navigate to={isAuthenticated ? '/' : '/login'} replace />
             }
           />
+          <Route path="/bulk-upload" element={<BulkUpload />} />
         </Routes>
       </div>
     </Router>

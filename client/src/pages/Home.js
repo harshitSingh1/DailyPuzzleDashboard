@@ -63,6 +63,14 @@ const Home = () => {
   return (
     <div className="page">
       <h1>Puzzle Solutions</h1>
+      <div style={{ margin: "20px 0 40px 0" }}>
+  <button
+    onClick={() => window.location.href = "/bulk-upload"}
+    className="bulk-btn"
+  >
+    🚀 Bulk Upload Solutions
+  </button>
+</div>
       <PuzzleForm onSubmit={handleAddPuzzle} />
       <PuzzleList 
         puzzles={puzzles} 
