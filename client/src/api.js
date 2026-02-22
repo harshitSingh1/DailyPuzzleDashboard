@@ -1,7 +1,7 @@
 // client\src\api.js
 import axios from 'axios';
 const API = axios.create({
-  baseURL: 'https://daily-puzzle-dashboard.vercel.app/api',
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
 });
 
 // Add auth token to requests
